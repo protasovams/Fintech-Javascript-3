@@ -37,9 +37,9 @@ function timer2 (logger) {
   }
 }
 
-timer();
-timer(undefined, "1"); // TODO как передать первый аргумент лучше?
-timer(undefined, "2");
+//timer();
+//timer(undefined, "1"); // TODO как передать первый аргумент лучше?
+//timer(undefined, "2");
 
 
 /*= ============================================ */
@@ -66,9 +66,23 @@ function customBind(func, context, ...args) {
  * sum :: void -> Number
  */
 function sum(x) {
-  return 0;
+	function add_to_result(x) {
+		if (typeof x == "undefined") {
+			return result;
+		}
+		result += x;
+		return add_to_result;
+	}
+	let result = 0;
+	if (typeof x == "undefined") {
+		return result;
+	}
+	result += x;
+	return add_to_result;
 }
 
+console.log(sum(1)(2)(8)());
+console.log(sum(-2)());
 /*= ============================================ */
 
 /**
