@@ -2,7 +2,7 @@
  * Исправьте проблему с таймером: должны выводиться числа от 0 до 9.
  * Доп. задание: предложите несколько вариантов решения.
  */
-function timer(version = "1", logger = console.log) {
+function timer(logger = console.log, version = "1") {
 	switch (version) {
 		case "1":
 			timer1(logger);
@@ -11,24 +11,35 @@ function timer(version = "1", logger = console.log) {
 			timer2(logger);
 			break;
 		default:
-			throw "unknown version '" + version + "'"
+			throw Error("unknown version '" + version + "'")
 	}
 }
 function timer1 (logger) {
 	let j=0;
-	for (var i = 0; i < 10; i++) {
+	for (let i = 0; i < 10; i++) {
 		setTimeout(() => {
 			logger(j++);
 		}, 100);
 	}
 }
 function timer2 (logger) {
-	logger("not yet implemented")
+	const createCounter = function() {
+		let count = 0;
+		return function() {
+			return count++;
+		}
+	}
+	let counter = createCounter();
+	for (let i = 0; i < 10; i++) {
+		setTimeout(() => {
+			logger(counter());
+		}, 100);
+	}
 }
 
 timer();
-timer("1");
-timer("2");
+timer(undefined, "1"); // TODO как передать первый аргумент лучше?
+timer(undefined, "2");
 
 
 /*= ============================================ */
