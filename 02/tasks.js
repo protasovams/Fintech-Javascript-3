@@ -87,8 +87,29 @@ console.log(sum(-2)());
  * @return {boolean}
  */
 function anagram(first, second) {
+  for (let i=0; i<first.length; i++) {
+    if (second.indexOf(first[i]) < 0) {
+      return false;
+    }
+    // вырезаем из второй строки каждую букву первой строки
+    second = second.replace(first[i],"");
+  }
+  if (second == "") {
+    return true;
+  }
   return false;
 }
+
+console.log(anagram("", ""));
+console.log(anagram("a", "a"));
+console.log(anagram("abcd", "dabc"));
+console.log(anagram("просветитель", "терпеливость"));
+console.log(anagram("?!! доколе?", "коледо??!! "));
+
+console.log(anagram("a", ""));
+console.log(anagram("", "a"));
+console.log(anagram("?!! доколе?", "коледо??!!"));
+
 
 /*= ============================================ */
 
