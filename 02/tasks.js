@@ -2,13 +2,45 @@
  * Исправьте проблему с таймером: должны выводиться числа от 0 до 9.
  * Доп. задание: предложите несколько вариантов решения.
  */
-function timer(logger = console.log) {
-  for (var i = 0; i < 10; i++) {
-    setTimeout(() => {
-      logger(i);
-    }, 100);
-  }
+function timer(logger = console.log, version = "1") {
+	switch (version) {
+		case "1":
+			timer1(logger);
+			break;
+		case "2":
+			timer2(logger);
+			break;
+		default:
+			throw Error("unknown version '" + version + "'")
+	}
 }
+function timer1 (logger) {
+	let j=0;
+	for (let i = 0; i < 10; i++) {
+		setTimeout(() => {
+			logger(j++);
+		}, 100);
+	}
+}
+function timer2 (logger) {
+	const createCounter = function() {
+		let count = 0;
+		return function() {
+			return count++;
+		}
+	}
+	let counter = createCounter();
+	for (let i = 0; i < 10; i++) {
+		setTimeout(() => {
+			logger(counter());
+		}, 100);
+	}
+}
+
+timer();
+timer(undefined, "1"); // TODO как передать первый аргумент лучше?
+timer(undefined, "2");
+
 
 /*= ============================================ */
 
@@ -23,6 +55,7 @@ function customBind(func, context, ...args) {
 
 }
 
+
 /*= ============================================ */
 
 /**
@@ -33,7 +66,7 @@ function customBind(func, context, ...args) {
  * sum :: void -> Number
  */
 function sum(x) {
-  return 0;
+	return 0;
 }
 
 /*= ============================================ */
@@ -45,7 +78,7 @@ function sum(x) {
  * @return {boolean}
  */
 function anagram(first, second) {
-  return false;
+	return false;
 }
 
 /*= ============================================ */
@@ -57,7 +90,7 @@ function anagram(first, second) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getUnique(arr) {
-  return [];
+	return [];
 }
 
 /**
@@ -67,7 +100,7 @@ function getUnique(arr) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getIntersection(first, second) {
-  return [];
+	return [];
 }
 
 /* ============================================= */
@@ -81,8 +114,8 @@ function getIntersection(first, second) {
  * последовательный символ в строке A сравнивается с
  * каждым последовательным символов в строке B.
  *
- * @param  {string} left
- * @param  {string} right
+ * @param	{string} left
+ * @param	{string} right
  * @return {boolean}
  */
 function isIsomorphic(left, right) {
@@ -90,11 +123,11 @@ function isIsomorphic(left, right) {
 }
 
 module.exports = {
-  timer,
-  customBind,
-  sum,
-  anagram,
-  getUnique,
-  getIntersection,
-  isIsomorphic
+	timer,
+	customBind,
+	sum,
+	anagram,
+	getUnique,
+	getIntersection,
+	isIsomorphic
 };
