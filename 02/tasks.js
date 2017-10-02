@@ -15,27 +15,22 @@ function timer(logger = console.log, version = "1") {
   }
 }
 function timer1 (logger) {
-  let j=0;
   for (let i = 0; i < 10; i++) {
     setTimeout(() => {
-      logger(j++);
+      logger(i);
     }, 100);
   }
 }
+
+
 function timer2 (logger) {
-  const createCounter = function() {
-    let count = 0;
-    return function() {
-      return count++;
-    }
-  }
-  let counter = createCounter();
-  for (let i = 0; i < 10; i++) {
+  for (var i = 0; i < 10; i++) {
     setTimeout(() => {
-      logger(counter());
+      logger(i);
     }, 100);
   }
 }
+
 
 //timer();
 //timer(undefined, "1"); // TODO как передать первый аргумент лучше?
