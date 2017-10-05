@@ -62,6 +62,14 @@ describe('Lesson 2', () => {
   describe('anagram', () => {
     it('should check are words anagrams of each other', () => {
       expect(anagram('просветитель', 'терпеливость')).to.be.ok();
+      expect(anagram('', '')).to.be.ok();
+      expect(anagram('a', 'a')).to.be.ok();
+      expect(anagram('abcdaaa', 'dabcaaa')).to.be.ok();
+      expect(anagram('?!! доколе?', 'коледо??!! ')).to.be.ok();
+      
+      expect(anagram('a', '')).not.to.be.ok();
+      expect(anagram('', 'a')).not.to.be.ok();
+      expect(anagram('?!! доколе?', 'коледо??!!')).not.to.be.ok();
       expect(anagram('первый', 'терпеливость')).not.to.be.ok();
     });
   });
@@ -69,6 +77,7 @@ describe('Lesson 2', () => {
   describe('getUnique', () => {
     it('should get uniq values from the array', () => {
       expect(getUnique([1, 2, 4, 2, 3, 1])).to.eql([1, 2, 3, 4]);
+      expect(getUnique([8, 2, 40, 256, 40, 2])).to.eql([2, 8, 40, 256]);
       expect(getUnique([1, 1, 1, 1])).to.eql([1]);
     });
   });

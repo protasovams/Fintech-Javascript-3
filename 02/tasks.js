@@ -2,13 +2,40 @@
  * Исправьте проблему с таймером: должны выводиться числа от 0 до 9.
  * Доп. задание: предложите несколько вариантов решения.
  */
-function timer(logger = console.log) {
+function timer(logger = console.log, version = "1") {
+  switch (version) {
+    case "1":
+      timer1(logger);
+      break;
+    case "2":
+      timer2(logger);
+      break;
+    default:
+      throw Error("unknown version '" + version + "'")
+  }
+}
+function timer1 (logger) {
+  for (let i = 0; i < 10; i++) {
+    setTimeout(() => {
+      logger(i);
+    }, 100);
+  }
+}
+
+
+function timer2 (logger) {
   for (var i = 0; i < 10; i++) {
     setTimeout(() => {
       logger(i);
     }, 100);
   }
 }
+
+
+//timer();
+//timer(undefined, "1"); // TODO как передать первый аргумент лучше?
+//timer(undefined, "2");
+
 
 /*= ============================================ */
 
@@ -23,6 +50,7 @@ function customBind(func, context, ...args) {
 
 }
 
+
 /*= ============================================ */
 
 /**
@@ -33,9 +61,23 @@ function customBind(func, context, ...args) {
  * sum :: void -> Number
  */
 function sum(x) {
-  return 0;
+  function add_to_result(x) {
+    if (typeof x == "undefined") {
+      return result;
+    }
+    result += x;
+    return add_to_result;
+  }
+  let result = 0;
+  if (typeof x == "undefined") {
+    return result;
+  }
+  result += x;
+  return add_to_result;
 }
 
+//console.log(sum(1)(2)(8)());
+//console.log(sum(-2)());
 /*= ============================================ */
 
 /**
@@ -45,8 +87,29 @@ function sum(x) {
  * @return {boolean}
  */
 function anagram(first, second) {
-  return false;
+  var letters = {};
+  // считаем все буквы первой строки 
+  for (let i=0; i<first.length; i++) {
+    letters[first[i]] === undefined ? letters[first[i]] = 1 : letters[first[i]]++;
+  }
+  // вычитаем все буквы второй строки
+  for (let i=0; i<second.length; i++) {
+    let curLetterNum = letters[second[i]];
+    if (curLetterNum === undefined || curLetterNum === 0) {
+      return false;
+    }
+    letters[second[i]]--;
+  }
+  // проверяем, что всех букв осталось 0
+  for (let key in letters) {
+    if (letters[key] !== 0) {
+      return false;
+    }
+  }
+  return true;
 }
+
+
 
 /*= ============================================ */
 
@@ -57,8 +120,18 @@ function anagram(first, second) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getUnique(arr) {
-  return [];
+  arr.sort((a,b) => a-b);
+  let uniqueArr = [];
+  let curValue;
+  for (let i=0; i<arr.length; i++) {
+    if (arr[i] !== curValue){
+      curValue = arr[i];
+      uniqueArr.push(curValue);
+    }
+  }
+  return uniqueArr;
 }
+
 
 /**
  * Найдите пересечение двух массивов
@@ -67,8 +140,40 @@ function getUnique(arr) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getIntersection(first, second) {
-  return [];
+  first.sort(sortNumbers);
+  second.sort(sortNumbers);
+  let resultArr = [];
+  var curValue;
+  for (let i=0, j=0; i<first.length, j<second.length; ) {
+    // уже положенные значения пропускаем
+    if (first[i] == curValue) {
+      i++;
+      j++;
+      continue;
+    }
+    if (first[i] === second[j]){
+      // совпадающие значения кладем в массив
+      curValue = first[i];
+      resultArr.push(curValue);
+      i++;
+      j++;
+    } else if (first[i] < second[j]) {
+      // пролистываем первый массив
+      i++;
+    } else {
+      // пролистываем второй массив
+      j++;
+    }
+  }
+  return resultArr;
 }
+
+function sortNumbers(a,b) {
+  return a - b;
+}
+
+//getIntersection([1, 9, 10, 3, 5, 7], [10, 3, 4])
+//getIntersection([1, 3, 5, 7, 9], [1, 2, 3, 4] )
 
 /* ============================================= */
 
@@ -86,7 +191,19 @@ function getIntersection(first, second) {
  * @return {boolean}
  */
 function isIsomorphic(left, right) {
-
+  let diffCount = 0;
+  if (left.length != right.length) {
+    return false;
+  }
+  for (let i=0; i<left.length; i++) {
+    if (left[i] !== right[i]) {
+      diffCount++;
+    }
+    if (diffCount > 1) {
+      return false;
+    }
+  }
+  return true;
 }
 
 module.exports = {
