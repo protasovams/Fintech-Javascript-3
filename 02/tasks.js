@@ -120,7 +120,7 @@ function anagram(first, second) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getUnique(arr) {
-  arr.sort();
+  arr.sort(sortNumbers);
   let uniqueArr = [];
   let curValue;
   for (let i=0; i<arr.length; i++) {
@@ -131,6 +131,9 @@ function getUnique(arr) {
   }
   return uniqueArr;
 }
+function sortNumbers(a,b) {
+  return a - b;
+}
 
 
 /**
@@ -140,8 +143,36 @@ function getUnique(arr) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getIntersection(first, second) {
-  return [];
+  first.sort(sortNumbers);
+  second.sort(sortNumbers);
+  let resultArr = [];
+  var curValue;
+  for (let i=0, j=0; i<first.length, j<second.length; ) {
+    // уже положенные значения пропускаем
+    if (first[i] == curValue) {
+      i++;
+      j++;
+      continue;
+    }
+    if (first[i] === second[j]){
+      // совпадающие значения кладем в массив
+      curValue = first[i];
+      resultArr.push(curValue);
+      i++;
+      j++;
+    } else if (first[i] < second[j]) {
+      // пролистываем первый массив
+      i++;
+    } else {
+      // пролистываем второй массив
+      j++;
+    }
+  }
+  return resultArr;
 }
+
+//getIntersection([1, 9, 10, 3, 5, 7], [10, 3, 4])
+//getIntersection([1, 3, 5, 7, 9], [1, 2, 3, 4] )
 
 /* ============================================= */
 

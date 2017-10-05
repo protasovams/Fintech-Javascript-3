@@ -77,6 +77,7 @@ describe('Lesson 2', () => {
   describe('getUnique', () => {
     it('should get uniq values from the array', () => {
       expect(getUnique([1, 2, 4, 2, 3, 1])).to.eql([1, 2, 3, 4]);
+      expect(getUnique([8, 2, 40, 256, 40, 2])).to.eql([2, 8, 40, 256]);
       expect(getUnique([1, 1, 1, 1])).to.eql([1]);
     });
   });
