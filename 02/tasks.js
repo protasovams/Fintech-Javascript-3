@@ -190,7 +190,19 @@ function getIntersection(first, second) {
  * @return {boolean}
  */
 function isIsomorphic(left, right) {
-
+  let diffCount = 0;
+  if (left.length != right.length) {
+    return false;
+  }
+  for (let i=0; i<left.length; i++) {
+    if (left[i] !== right[i]) {
+      diffCount++;
+    }
+    if (diffCount > 1) {
+      return false;
+    }
+  }
+  return true;
 }
 
 module.exports = {
