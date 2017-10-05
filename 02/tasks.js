@@ -61,23 +61,23 @@ function customBind(func, context, ...args) {
  * sum :: void -> Number
  */
 function sum(x) {
-	function add_to_result(x) {
-		if (typeof x == "undefined") {
-			return result;
-		}
-		result += x;
-		return add_to_result;
-	}
-	let result = 0;
-	if (typeof x == "undefined") {
-		return result;
-	}
-	result += x;
-	return add_to_result;
+  function add_to_result(x) {
+    if (typeof x == "undefined") {
+      return result;
+    }
+    result += x;
+    return add_to_result;
+  }
+  let result = 0;
+  if (typeof x == "undefined") {
+    return result;
+  }
+  result += x;
+  return add_to_result;
 }
 
-console.log(sum(1)(2)(8)());
-console.log(sum(-2)());
+//console.log(sum(1)(2)(8)());
+//console.log(sum(-2)());
 /*= ============================================ */
 
 /**
@@ -87,28 +87,28 @@ console.log(sum(-2)());
  * @return {boolean}
  */
 function anagram(first, second) {
+  var letters = {};
+  // считаем все буквы первой строки 
   for (let i=0; i<first.length; i++) {
-    if (second.indexOf(first[i]) < 0) {
+    letters[first[i]] === undefined ? letters[first[i]] = 1 : letters[first[i]]++;
+  }
+  // вычитаем все буквы второй строки
+  for (let i=0; i<second.length; i++) {
+    let curLetterNum = letters[second[i]];
+    if (curLetterNum === undefined || curLetterNum === 0) {
       return false;
     }
-    // вырезаем из второй строки каждую букву первой строки
-    second = second.replace(first[i],"");
+    letters[second[i]]--;
   }
-  if (second == "") {
-    return true;
+  // проверяем, что всех букв осталось 0
+  for (let key in letters) {
+    if (letters[key] !== 0) {
+      return false;
+    }
   }
-  return false;
+  return true;
 }
 
-console.log(anagram("", ""));
-console.log(anagram("a", "a"));
-console.log(anagram("abcd", "dabc"));
-console.log(anagram("просветитель", "терпеливость"));
-console.log(anagram("?!! доколе?", "коледо??!! "));
-
-console.log(anagram("a", ""));
-console.log(anagram("", "a"));
-console.log(anagram("?!! доколе?", "коледо??!!"));
 
 
 /*= ============================================ */

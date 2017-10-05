@@ -62,6 +62,14 @@ describe('Lesson 2', () => {
   describe('anagram', () => {
     it('should check are words anagrams of each other', () => {
       expect(anagram('просветитель', 'терпеливость')).to.be.ok();
+      expect(anagram('', '')).to.be.ok();
+      expect(anagram('a', 'a')).to.be.ok();
+      expect(anagram('abcdaaa', 'dabcaaa')).to.be.ok();
+      expect(anagram('?!! доколе?', 'коледо??!! ')).to.be.ok();
+      
+      expect(anagram('a', '')).not.to.be.ok();
+      expect(anagram('', 'a')).not.to.be.ok();
+      expect(anagram('?!! доколе?', 'коледо??!!')).not.to.be.ok();
       expect(anagram('первый', 'терпеливость')).not.to.be.ok();
     });
   });
