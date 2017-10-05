@@ -120,8 +120,18 @@ function anagram(first, second) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getUnique(arr) {
-  return [];
+  arr.sort();
+  let uniqueArr = [];
+  let curValue;
+  for (let i=0; i<arr.length; i++) {
+    if (arr[i] !== curValue){
+      curValue = arr[i];
+      uniqueArr.push(curValue);
+    }
+  }
+  return uniqueArr;
 }
+
 
 /**
  * Найдите пересечение двух массивов
