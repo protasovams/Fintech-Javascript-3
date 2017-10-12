@@ -8,11 +8,12 @@
 function promiseAll(promises) {
   return new Promise(function(resolve, reject) {
     const resolved = [];
-    promises.forEach(promise => {
+    let resolvedCount = 0;
+    promises.forEach((promise, i) => {
       promise
-        .then((res) => resolved.push(res))
+        .then(res => {resolved[i] = res; resolvedCount++}, reject)
         .then(() => {
-          if (resolved.length === promises.length) {
+          if (resolvedCount === promises.length) {
             resolve(resolved);
           }
         })
